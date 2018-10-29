@@ -1,16 +1,13 @@
 __author__ = 'dh1tw'
 
+import re
+import pytz
 from datetime import datetime
 from time import strptime, mktime
-import re
-
-import pytz
-
 from pyhamtools.consts import LookupConventions as const
 
 
 UTC = pytz.UTC
-
 
 
 def decode_char_spot(raw_string):

@@ -1,24 +1,23 @@
-import os
-import logging
-import logging.config
 import re
+import os
+import sys
+import copy
+import pytz
+import json
+import urllib
+import logging
+import version
+import requests
+import unicodedata
+import logging.config
 import random, string
+from bs4 import BeautifulSoup
 from datetime import datetime
 import xml.etree.ElementTree as ET
-import urllib
-import json
-import copy
-import sys
-import unicodedata
-
-import requests
-from requests.exceptions import ConnectionError, HTTPError, Timeout
-from bs4 import BeautifulSoup
-import pytz
-
-import version
-from consts import LookupConventions as const
 from exceptions import APIKeyMissingError
+from consts import LookupConventions as const
+from requests.exceptions import ConnectionError, HTTPError, Timeout
+
 
 UTC = pytz.UTC
 timestamp_now = datetime.utcnow().replace(tzinfo=UTC)
@@ -69,7 +68,6 @@ class LookupLib(object):
 
     """
     def __init__(self, lookuptype = "countryfile", apikey=None, apiv="1.3.3", filename=None, logger=None, username=None, pwd=None, redis_instance=None, redis_prefix=None):
-
         self._logger = None
         if logger:
             self._logger = logger
@@ -116,7 +114,6 @@ class LookupLib(object):
             raise AttributeError("Lookup type missing")
 
     def _get_qrz_session_key(self, username, pwd):
-
         qrz_api_version = "1.3.3"
         url = "https://xmldata.qrz.com/xml/" + qrz_api_version + "/"
         agent = "PyHamTools"+version.__version__
@@ -198,7 +195,6 @@ class LookupLib(object):
             raise KeyError("redis_prefix is missing")
 
         if self._lookuptype == "clublogxml" or self._lookuptype == "countryfile":
-
             self._push_dict_to_redis(self._entities, redis_prefix, "_entity_")
 
             self._push_dict_index_to_redis(self._callsign_exceptions_index, redis_prefix, "_call_ex_index_")
@@ -366,11 +362,9 @@ class LookupLib(object):
                 return callsign_data
 
         elif self._lookuptype == "clublogxml" or self._lookuptype == "countryfile":
-
             return self._check_data_for_date(callsign, timestamp, self._callsign_exceptions, self._callsign_exceptions_index)
 
         elif self._lookuptype == "redis":
-
             data_dict, index = self._get_dicts_from_redis("_call_ex_", "_call_ex_index_", self._redis_prefix, callsign)
             return self._check_data_for_date(callsign, timestamp, data_dict, index)
 

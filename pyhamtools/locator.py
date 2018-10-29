@@ -43,7 +43,7 @@ def latlong_to_locator (latitude, longitude):
         raise ValueError
 
     longitude += 180;
-    latitude +=90;
+    latitude += 90;
 
     locator = chr(ord('A') + int(longitude / 20))
     locator += chr(ord('A') + int(latitude / 10))
@@ -148,7 +148,7 @@ def calculate_distance(locator1, locator2):
 
     """
 
-    R = 6371 #earh radius
+    R = 6371 # earth radius
     lat1, long1 = locator_to_latlong(locator1)
     lat2, long2 = locator_to_latlong(locator2)
 
@@ -190,7 +190,7 @@ def calculate_distance_longpath(locator1, locator2):
 
     """
 
-    c = 40008 #[km] earth circumference
+    c = 40008 # [km] earth circumference
     sp = calculate_distance(locator1, locator2)
 
     return c - sp

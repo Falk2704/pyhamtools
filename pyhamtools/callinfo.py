@@ -1,12 +1,9 @@
 import re
+import sys
+import pytz
 import logging
 from datetime import datetime
-import sys
-
-import pytz
-
 from pyhamtools.consts import LookupConventions as const
-
 from pyhamtools.callsign_exceptions import callsign_exceptions
 
 UTC = pytz.UTC
@@ -32,7 +29,6 @@ class Callinfo(object):
     """
 
     def __init__(self, lookuplib, logger=None):
-
         self._logger = None
         if logger:
             self._logger = logger
@@ -227,7 +223,6 @@ class Callinfo(object):
         raise KeyError("Callsign could not be decoded")
 
     def _lookup_callsign(self, callsign, timestamp=timestamp_now):
-
         # Check if operation is invalid
         invalid = False
         try:
